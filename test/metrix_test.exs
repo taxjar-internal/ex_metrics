@@ -1,8 +1,9 @@
 defmodule MetrixTest do
-  use ExUnit.Case
-  doctest Metrix
+  use ExUnit.Case, async: true
 
-  test "greets the world" do
-    assert Metrix.hello() == :world
+  describe "start/0" do
+    test "starts Metrix by opening a UDP socket" do
+      assert Metrix.start() == :ok
+    end
   end
 end
