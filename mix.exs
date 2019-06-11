@@ -43,6 +43,7 @@ defmodule Metrix.MixProject do
       {:excoveralls, "~> 0.11.1", only: :test},
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
       {:mimic, "~> 0.3", only: :test},
+      {:plug, "~> 1.8"},
       {:statix, "~> 1.1.0"}
     ]
   end
