@@ -1,8 +1,8 @@
-defmodule Metrix.FunctionTimerTest do
+defmodule ExMetrics.FunctionTimerTest do
   use ExUnit.Case, async: false
   import Mimic
 
-  @default_prefix "function_call.elixir.metrix.functiontimertest.timedmodule"
+  @default_prefix "function_call.elixir.exmetrics.functiontimertest.timedmodule"
 
   defmodule MetricsAgent do
     use Agent
@@ -21,7 +21,7 @@ defmodule Metrix.FunctionTimerTest do
   end
 
   defmodule TimedModule do
-    use Metrix.FunctionTimer
+    use ExMetrics.FunctionTimer
 
     deftimed(default, do: :default)
 
@@ -56,11 +56,11 @@ defmodule Metrix.FunctionTimerTest do
     setup _context do
       MetricsAgent.start_link()
 
-      stub(Metrix, :timing, fn name, value, options ->
+      stub(ExMetrics, :timing, fn name, value, options ->
         MetricsAgent.set({name, value, options})
       end)
 
-      stub(Metrix, :histogram, fn name, value, options ->
+      stub(ExMetrics, :histogram, fn name, value, options ->
         MetricsAgent.set({name, value, options})
       end)
 

@@ -1,2 +1,2 @@
-Mimic.copy(Metrix)
+Mimic.copy(ExMetrics)
 ExUnit.start()

@@ -1,4 +1,4 @@
-defmodule Metrix.FunctionTimer do
+defmodule ExMetrics.FunctionTimer do
   @moduledoc """
   The #{__MODULE__} module provides a way to easily time functions and send metrics
   to a StatsD server, with out having to manually time each function.
@@ -6,7 +6,7 @@ defmodule Metrix.FunctionTimer do
 
   defmacro __using__(opts) do
     quote do
-      import Metrix.FunctionTimer
+      import ExMetrics.FunctionTimer
       @use_histogram Keyword.get(unquote(opts), :use_histogram)
       @default_metric_options []
     end
@@ -18,17 +18,17 @@ defmodule Metrix.FunctionTimer do
     function_id = "#{function_name}_#{arg_length}"
 
     quote do
-      @metrix_metric_name metric_name(__MODULE__, unquote(function_id))
-      @metrix_metric_options metric_options(__MODULE__, unquote(function_id))
+      @ex_metrics_metric_name metric_name(__MODULE__, unquote(function_id))
+      @ex_metrics_metric_options metric_options(__MODULE__, unquote(function_id))
       @timing_function timing_function(__MODULE__)
       def unquote(head) do
         {time, value} = :timer.tc(fn -> unquote(body[:do]) end)
         milliseconds = time / 1_000
 
-        Kernel.apply(Metrix, @timing_function, [
-          @metrix_metric_name,
+        Kernel.apply(ExMetrics, @timing_function, [
+          @ex_metrics_metric_name,
           milliseconds,
-          @metrix_metric_options
+          @ex_metrics_metric_options
         ])
 
         value
@@ -80,11 +80,11 @@ defmodule Metrix.FunctionTimer do
 
   @doc ~S"""
   The timing_function/1 function is used to determine whether to
-  make a call to Metrix.histogram/3 or Metrix.timing/3. By default, Metrix.timing/3
+  make a call to ExMetrics.histogram/3 or ExMetrics.timing/3. By default, ExMetrics.timing/3
   will be called, but this can be overriden with:
 
   defmodule UseHistogram do
-    use Metrix.FunctionTimer, use_histogram: true
+    use ExMetrics.FunctionTimer, use_histogram: true
   end
   """
   def timing_function(module) do

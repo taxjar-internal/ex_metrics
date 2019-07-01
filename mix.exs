@@ -1,11 +1,11 @@
-defmodule Metrix.MixProject do
+defmodule ExMetrics.MixProject do
   use Mix.Project
 
-  @github_url "https://github.com/mpiercy827/metrix"
+  @github_url "https://github.com/mpiercy827/ex_metrics"
 
   def project do
     [
-      app: :metrix,
+      app: :ex_metrics,
       name: "metrics",
       description: "Another Elixir metrics library.",
       version: "0.1.0",

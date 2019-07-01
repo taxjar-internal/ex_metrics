@@ -1,6 +1,6 @@
-defmodule Metrix do
+defmodule ExMetrics do
   @moduledoc """
-  Metrix is a library for collecting StatsD metrics. It is built on top of [`statix`](https://github.com/lexmag/statix). By using Statix, the following functions
+  ExMetrics is a library for collecting StatsD metrics. It is built on top of [`statix`](https://github.com/lexmag/statix). By using Statix, the following functions
   are injected into this module:
 
   * decrement/1,2,3
@@ -33,8 +33,8 @@ defmodule Metrix do
 
   @spec set_statix_config(atom) :: :ok
   defp set_statix_config(option) do
-    if metrix_value = Application.get_env(:metrix, option) do
-      Application.put_env(:statix, option, metrix_value)
+    if ex_metrics_value = Application.get_env(:ex_metrics, option) do
+      Application.put_env(:statix, option, ex_metrics_value)
     end
   end
 end

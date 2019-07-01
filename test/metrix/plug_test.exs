@@ -1,4 +1,4 @@
-defmodule Metrix.PlugTest do
+defmodule ExMetrics.PlugTest do
   use ExUnit.Case, async: false
   use Plug.Test
   import Mimic
@@ -21,7 +21,7 @@ defmodule Metrix.PlugTest do
 
   describe "init/1" do
     test "returns options unchanged" do
-      assert Metrix.Plug.init(key: :value) == [key: :value]
+      assert ExMetrics.Plug.init(key: :value) == [key: :value]
     end
   end
 
@@ -29,11 +29,11 @@ defmodule Metrix.PlugTest do
     setup _context do
       MetricsAgent.start_link()
 
-      stub(Metrix, :timing, fn name, value ->
+      stub(ExMetrics, :timing, fn name, value ->
         MetricsAgent.set({:timing, name, value})
       end)
 
-      stub(Metrix, :histogram, fn name, value ->
+      stub(ExMetrics, :histogram, fn name, value ->
         MetricsAgent.set({:histogram, name, value})
       end)
 
@@ -45,7 +45,7 @@ defmodule Metrix.PlugTest do
 
       result_conn =
         conn
-        |> Metrix.Plug.call([])
+        |> ExMetrics.Plug.call([])
         |> Plug.Conn.send_resp(200, "")
 
       {:timing, name, time} = MetricsAgent.get()
@@ -61,7 +61,7 @@ defmodule Metrix.PlugTest do
 
       result_conn =
         conn
-        |> Metrix.Plug.call(histogram: true)
+        |> ExMetrics.Plug.call(histogram: true)
         |> Plug.Conn.send_resp(200, "")
 
       {:histogram, name, time} = MetricsAgent.get()
@@ -77,7 +77,7 @@ defmodule Metrix.PlugTest do
 
       result_conn =
         conn
-        |> Metrix.Plug.call([])
+        |> ExMetrics.Plug.call([])
         |> Plug.Conn.send_resp(200, "")
 
       {:timing, name, time} = MetricsAgent.get()

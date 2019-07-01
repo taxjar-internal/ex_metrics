@@ -1,6 +1,6 @@
-# Metrix
+# ExMetrics
 
-Another Elixir metrics library, Metrix is a thin wrapper built on top of
+Another Elixir metrics library, ExMetrics is a thin wrapper built on top of
 [`statix`](https://github.com/lexmag/statix) providing convenient macros
 for timing function calls.
 
@@ -9,14 +9,14 @@ for timing function calls.
 ```elixir
 def deps do
   [
-    {:metrix, "~> 0.1.0"}
+    {:ex_metrics, "~> 0.1.0"}
   ]
 end
 ```
 
 ## Configuration
 
-`metrix` supports the following global configuration options:
+`ex_metrics` supports the following global configuration options:
 
 * `prefix`: A prefix for all metric names, default `nil`
 * `host`: The StatsD host, default `127.0.0.1`
@@ -27,15 +27,15 @@ end
 
 ### Metrics Collection
 
-`metrix` exposes the following functions for metrics collection (the same as `statix`):
+`ex_metrics` exposes the following functions for metrics collection (the same as `statix`):
 
-* `Metrix.decrement/1,2,3`
-* `Metrix.gauge/2,3`
-* `Metrix.histogram/2,3`
-* `Metrix.increment/1,2,3`
-* `Metrix.measure/2,3`
-* `Metrix.set/2,3`
-* `Metrix.timing/2,3`
+* `ExMetrics.decrement/1,2,3`
+* `ExMetrics.gauge/2,3`
+* `ExMetrics.histogram/2,3`
+* `ExMetrics.increment/1,2,3`
+* `ExMetrics.measure/2,3`
+* `ExMetrics.set/2,3`
+* `ExMetrics.timing/2,3`
 
 ### `deftimed` Macro
 
@@ -43,7 +43,7 @@ Functions can be timed easily with the `deftimed` macro:
 
 ```elixir
 defmodule MyApp do
-  use Metrix.FunctionTimer
+  use ExMetrics.FunctionTimer
 
   deftimed foo do
     # Times foo/0 function and sends metric name: "function_call.elixir.myapp.foo_0"
@@ -72,14 +72,14 @@ end
 
 ### Plug
 
-Response times can be automatically captured and reported with the `Metrix.Plug`:
+Response times can be automatically captured and reported with the `ExMetrics.Plug`:
 
 ```elixir
 defmodule MyRouter do
   use Plug.Router
 
   plug(:accepts, ["json", "urlencoded"])
-  plug(Metrix.Plug)
+  plug(ExMetrics.Plug)
 
   get("/", MyController, :action)                   # Metric name: response_time.root
   get("/v2/users/:id/edit", UsersController, :edit) # Metric name: response_time.v2.users.id.edit

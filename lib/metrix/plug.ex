@@ -1,6 +1,6 @@
-defmodule Metrix.Plug do
+defmodule ExMetrics.Plug do
   @moduledoc """
-  The Metrix.Plug module provides a plug for capturing response times and sending
+  The ExMetrics.Plug module provides a plug for capturing response times and sending
   those metrics to a StatsD server.
   """
   import Plug.Conn
@@ -19,9 +19,9 @@ defmodule Metrix.Plug do
       time_ms = :timer.now_diff(end_time, start_time) / 1_000
 
       if Keyword.get(options, :histogram) do
-        Metrix.histogram(metric_name, time_ms)
+        ExMetrics.histogram(metric_name, time_ms)
       else
-        Metrix.timing(metric_name, time_ms)
+        ExMetrics.timing(metric_name, time_ms)
       end
 
       conn
