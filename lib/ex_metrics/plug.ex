@@ -39,6 +39,8 @@ defmodule ExMetrics.Plug do
   defp metric_name_from_request_path(request_path) do
     request_path
     |> String.replace("/", ".")
+    |> String.replace(~r/\.+/, ".")
+    |> String.trim_trailing(".")
     |> String.replace(":", "")
   end
 end

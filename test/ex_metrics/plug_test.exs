@@ -87,5 +87,21 @@ defmodule ExMetrics.PlugTest do
       assert name == "response_time.root"
       assert is_float(time)
     end
+
+    test "strips multiple consecutive periods" do
+      conn = conn(:get, "/v2/users/?id=1234")
+
+      result_conn =
+        conn
+        |> ExMetrics.Plug.call([])
+        |> Plug.Conn.send_resp(200, "")
+
+      {:timing, name, time} = MetricsAgent.get()
+
+      assert result_conn.status == 200
+      assert result_conn.state == :sent
+      assert name == "response_time.v2.users"
+      assert is_float(time)
+    end
   end
 end
