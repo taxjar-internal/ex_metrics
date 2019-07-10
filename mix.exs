@@ -44,7 +44,7 @@ defmodule ExMetrics.MixProject do
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
       {:mimic, "~> 0.3", only: :test},
       {:plug, "~> 1.8"},
-      {:statix, "~> 1.1.0"}
+      {:statix, "~> 1.2.0"}
     ]
   end
 
