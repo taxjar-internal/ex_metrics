@@ -1,3 +1,9 @@
+### 0.1.2 (2019-07-10)
+
+##### Chores
+
+* **statix:** update statix ([#8](https://github.com/mpiercy827/ex_metrics/pull/8))
+
 ### 0.1.1 (2019-07-09)
 
 ##### Bug Fixes
