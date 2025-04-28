@@ -43,8 +43,8 @@ defmodule ExMetrics.MixProject do
       {:excoveralls, "~> 0.11.1", only: :test},
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
       {:mimic, "~> 0.3", only: :test},
-      {:plug, "~> 1.8"},
-      {:statix, "~> 1.2.0"}
+      {:plug, "~> 1.17"},
+      {:statix, git: "https://github.com/taxjar-internal/statix.git", branch: "master"}
     ]
   end
 
