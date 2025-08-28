@@ -12,11 +12,11 @@ defmodule ExMetrics.Plug do
   def call(conn, options) do
     metric_name = get_metric_name(conn)
 
-    start_time = System.monotonic_time()
+    start_time = System.monotonic_time(:millisecond)
 
     register_before_send(conn, fn conn ->
-      end_time = System.monotonic_time()
-      time_ms = (end_time - start_time) / 1_000
+      end_time = System.monotonic_time(:millisecond)
+      time_ms = end_time - start_time
 
       if Keyword.get(options, :histogram) do
         ExMetrics.histogram(metric_name, time_ms)
